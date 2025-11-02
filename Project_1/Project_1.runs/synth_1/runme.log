@@ -1,0 +1,272 @@
+
+*** Running vivado
+    with args -log Single_Cycle_P.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source Single_Cycle_P.tcl
+
+
+
+****** Vivado v2022.1 (64-bit)
+  **** SW Build 3526262 on Mon Apr 18 15:48:16 MDT 2022
+  **** IP Build 3524634 on Mon Apr 18 20:55:01 MDT 2022
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+
+source Single_Cycle_P.tcl -notrace
+Command: synth_design -top Single_Cycle_P -part xc7a100tcsg324-1
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7a100t'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a100t'
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 17732
+---------------------------------------------------------------------------------
+Starting Synthesize : Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 1298.312 ; gain = 0.000
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'Single_Cycle_P' [C:/Users/Yara2005/Project 1/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/Processor.v:23]
+INFO: [Synth 8-6157] synthesizing module 'register' [C:/Users/Yara2005/Project 1/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/register.v:23]
+	Parameter n bound to: 32 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'DFlipFlop' [C:/Users/Yara2005/Project 1/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/flipflop.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'DFlipFlop' (0#1) [C:/Users/Yara2005/Project 1/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/flipflop.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'register' (0#1) [C:/Users/Yara2005/Project 1/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/register.v:23]
+INFO: [Synth 8-6157] synthesizing module 'InstMem' [C:/Users/Yara2005/Project 1/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/InstMem.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'InstMem' (0#1) [C:/Users/Yara2005/Project 1/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/InstMem.v:23]
+INFO: [Synth 8-6157] synthesizing module 'Register_File' [C:/Users/Yara2005/Project 1/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/Register_File.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'Register_File' (0#1) [C:/Users/Yara2005/Project 1/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/Register_File.v:23]
+INFO: [Synth 8-6157] synthesizing module 'DataMem' [C:/Users/Yara2005/Project 1/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/DataMem.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'DataMem' (0#1) [C:/Users/Yara2005/Project 1/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/DataMem.v:23]
+INFO: [Synth 8-6157] synthesizing module 'ALU' [C:/Users/Yara2005/Project 1/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/ALU.v:23]
+INFO: [Synth 8-6157] synthesizing module 'RCA' [C:/Users/Yara2005/Project 1/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/RCA-1.v:23]
+	Parameter N bound to: 32 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'FullAdder' [C:/Users/Yara2005/Project 1/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/FullAdder-1-1.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'FullAdder' (0#1) [C:/Users/Yara2005/Project 1/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/FullAdder-1-1.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'RCA' (0#1) [C:/Users/Yara2005/Project 1/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/RCA-1.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'ALU' (0#1) [C:/Users/Yara2005/Project 1/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/ALU.v:23]
+INFO: [Synth 8-6157] synthesizing module 'ALU_Control' [C:/Users/Yara2005/Project 1/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/ALU_Control.v:23]
+INFO: [Synth 8-155] case statement is not full and has no default [C:/Users/Yara2005/Project 1/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/ALU_Control.v:35]
+INFO: [Synth 8-6155] done synthesizing module 'ALU_Control' (0#1) [C:/Users/Yara2005/Project 1/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/ALU_Control.v:23]
+INFO: [Synth 8-6157] synthesizing module 'shift_left' [C:/Users/Yara2005/Project 1/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/shift_left.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'shift_left' (0#1) [C:/Users/Yara2005/Project 1/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/shift_left.v:23]
+INFO: [Synth 8-6157] synthesizing module 'Control_Unit' [C:/Users/Yara2005/Project 1/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/Control_Unit.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'Control_Unit' (0#1) [C:/Users/Yara2005/Project 1/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/Control_Unit.v:23]
+INFO: [Synth 8-6157] synthesizing module 'ImmGen' [C:/Users/Yara2005/Project 1/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/imm_gen.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'ImmGen' (0#1) [C:/Users/Yara2005/Project 1/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/imm_gen.v:23]
+INFO: [Synth 8-6157] synthesizing module 'multiplexer' [C:/Users/Yara2005/Project 1/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/multiplexer.v:23]
+	Parameter n bound to: 32 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'multiplexer' (0#1) [C:/Users/Yara2005/Project 1/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/multiplexer.v:23]
+WARNING: [Synth 8-689] width (32) of port connection 'Sum' does not match port width (33) of module 'RCA' [C:/Users/Yara2005/Project 1/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/Processor.v:50]
+WARNING: [Synth 8-689] width (32) of port connection 'Sum' does not match port width (33) of module 'RCA' [C:/Users/Yara2005/Project 1/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/Processor.v:51]
+INFO: [Synth 8-6155] done synthesizing module 'Single_Cycle_P' (0#1) [C:/Users/Yara2005/Project 1/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/Processor.v:23]
+WARNING: [Synth 8-7129] Port inst[19] in module ImmGen is either unconnected or has no load
+WARNING: [Synth 8-7129] Port inst[18] in module ImmGen is either unconnected or has no load
+WARNING: [Synth 8-7129] Port inst[17] in module ImmGen is either unconnected or has no load
+WARNING: [Synth 8-7129] Port inst[16] in module ImmGen is either unconnected or has no load
+WARNING: [Synth 8-7129] Port inst[15] in module ImmGen is either unconnected or has no load
+WARNING: [Synth 8-7129] Port inst[14] in module ImmGen is either unconnected or has no load
+WARNING: [Synth 8-7129] Port inst[13] in module ImmGen is either unconnected or has no load
+WARNING: [Synth 8-7129] Port inst[12] in module ImmGen is either unconnected or has no load
+WARNING: [Synth 8-7129] Port inst[4] in module ImmGen is either unconnected or has no load
+WARNING: [Synth 8-7129] Port inst[3] in module ImmGen is either unconnected or has no load
+WARNING: [Synth 8-7129] Port inst[2] in module ImmGen is either unconnected or has no load
+WARNING: [Synth 8-7129] Port inst[1] in module ImmGen is either unconnected or has no load
+WARNING: [Synth 8-7129] Port inst[0] in module ImmGen is either unconnected or has no load
+WARNING: [Synth 8-7129] Port in[31] in module shift_left is either unconnected or has no load
+---------------------------------------------------------------------------------
+Finished Synthesize : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 1298.312 ; gain = 0.000
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 1298.312 ; gain = 0.000
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7a100tcsg324-1
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 1298.312 ; gain = 0.000
+---------------------------------------------------------------------------------
+INFO: [Device 21-403] Loading part xc7a100tcsg324-1
+WARNING: [Synth 8-327] inferring latch for variable 'second_reg' [C:/Users/Yara2005/Project 1/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/ALU.v:32]
+WARNING: [Synth 8-327] inferring latch for variable 'c0_reg' [C:/Users/Yara2005/Project 1/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/ALU.v:32]
+WARNING: [Synth 8-327] inferring latch for variable 'ALUSel_reg' [C:/Users/Yara2005/Project 1/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/ALU_Control.v:32]
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 1298.312 ; gain = 0.000
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   3 Input    2 Bit       Adders := 96    
++---Registers : 
+	               32 Bit    Registers := 32    
+	                1 Bit    Registers := 32    
++---Muxes : 
+	  12 Input   32 Bit        Muxes := 1     
+	   2 Input   32 Bit        Muxes := 8     
+	   5 Input   32 Bit        Muxes := 1     
+	   4 Input    4 Bit        Muxes := 2     
+	   5 Input    2 Bit        Muxes := 1     
+	   2 Input    1 Bit        Muxes := 69    
+	   4 Input    1 Bit        Muxes := 2     
+	   7 Input    1 Bit        Muxes := 1     
+	   5 Input    1 Bit        Muxes := 6     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 240 (col length:80)
+BRAMs: 270 (col length: RAMB18 80 RAMB36 40)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
+WARNING: [Synth 8-3332] Sequential element (a/second_reg[31]) is unused and will be removed from module Single_Cycle_P.
+WARNING: [Synth 8-3332] Sequential element (a/second_reg[30]) is unused and will be removed from module Single_Cycle_P.
+WARNING: [Synth 8-3332] Sequential element (a/second_reg[29]) is unused and will be removed from module Single_Cycle_P.
+WARNING: [Synth 8-3332] Sequential element (a/second_reg[28]) is unused and will be removed from module Single_Cycle_P.
+WARNING: [Synth 8-3332] Sequential element (a/second_reg[27]) is unused and will be removed from module Single_Cycle_P.
+WARNING: [Synth 8-3332] Sequential element (a/second_reg[26]) is unused and will be removed from module Single_Cycle_P.
+WARNING: [Synth 8-3332] Sequential element (a/second_reg[25]) is unused and will be removed from module Single_Cycle_P.
+WARNING: [Synth 8-3332] Sequential element (a/second_reg[24]) is unused and will be removed from module Single_Cycle_P.
+WARNING: [Synth 8-3332] Sequential element (a/second_reg[23]) is unused and will be removed from module Single_Cycle_P.
+WARNING: [Synth 8-3332] Sequential element (a/second_reg[22]) is unused and will be removed from module Single_Cycle_P.
+WARNING: [Synth 8-3332] Sequential element (a/second_reg[21]) is unused and will be removed from module Single_Cycle_P.
+WARNING: [Synth 8-3332] Sequential element (a/second_reg[20]) is unused and will be removed from module Single_Cycle_P.
+WARNING: [Synth 8-3332] Sequential element (a/second_reg[19]) is unused and will be removed from module Single_Cycle_P.
+WARNING: [Synth 8-3332] Sequential element (a/second_reg[18]) is unused and will be removed from module Single_Cycle_P.
+WARNING: [Synth 8-3332] Sequential element (a/second_reg[17]) is unused and will be removed from module Single_Cycle_P.
+WARNING: [Synth 8-3332] Sequential element (a/second_reg[16]) is unused and will be removed from module Single_Cycle_P.
+WARNING: [Synth 8-3332] Sequential element (a/second_reg[15]) is unused and will be removed from module Single_Cycle_P.
+WARNING: [Synth 8-3332] Sequential element (a/second_reg[14]) is unused and will be removed from module Single_Cycle_P.
+WARNING: [Synth 8-3332] Sequential element (a/second_reg[13]) is unused and will be removed from module Single_Cycle_P.
+WARNING: [Synth 8-3332] Sequential element (a/second_reg[12]) is unused and will be removed from module Single_Cycle_P.
+WARNING: [Synth 8-3332] Sequential element (a/second_reg[11]) is unused and will be removed from module Single_Cycle_P.
+WARNING: [Synth 8-3332] Sequential element (a/second_reg[10]) is unused and will be removed from module Single_Cycle_P.
+WARNING: [Synth 8-3332] Sequential element (a/second_reg[9]) is unused and will be removed from module Single_Cycle_P.
+WARNING: [Synth 8-3332] Sequential element (a/second_reg[8]) is unused and will be removed from module Single_Cycle_P.
+WARNING: [Synth 8-3332] Sequential element (a/second_reg[7]) is unused and will be removed from module Single_Cycle_P.
+WARNING: [Synth 8-3332] Sequential element (a/second_reg[6]) is unused and will be removed from module Single_Cycle_P.
+WARNING: [Synth 8-3332] Sequential element (a/second_reg[5]) is unused and will be removed from module Single_Cycle_P.
+WARNING: [Synth 8-3332] Sequential element (a/second_reg[4]) is unused and will be removed from module Single_Cycle_P.
+WARNING: [Synth 8-3332] Sequential element (a/second_reg[3]) is unused and will be removed from module Single_Cycle_P.
+WARNING: [Synth 8-3332] Sequential element (a/second_reg[2]) is unused and will be removed from module Single_Cycle_P.
+WARNING: [Synth 8-3332] Sequential element (a/second_reg[1]) is unused and will be removed from module Single_Cycle_P.
+WARNING: [Synth 8-3332] Sequential element (a/second_reg[0]) is unused and will be removed from module Single_Cycle_P.
+WARNING: [Synth 8-3332] Sequential element (a/c0_reg) is unused and will be removed from module Single_Cycle_P.
+WARNING: [Synth 8-3332] Sequential element (AC/ALUSel_reg[3]) is unused and will be removed from module Single_Cycle_P.
+WARNING: [Synth 8-3332] Sequential element (AC/ALUSel_reg[2]) is unused and will be removed from module Single_Cycle_P.
+WARNING: [Synth 8-3332] Sequential element (AC/ALUSel_reg[1]) is unused and will be removed from module Single_Cycle_P.
+WARNING: [Synth 8-3332] Sequential element (AC/ALUSel_reg[0]) is unused and will be removed from module Single_Cycle_P.
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 1298.312 ; gain = 0.000
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 1298.312 ; gain = 0.000
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 1298.312 ; gain = 0.000
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 1298.312 ; gain = 0.000
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 1298.312 ; gain = 0.000
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 1298.312 ; gain = 0.000
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 1298.312 ; gain = 0.000
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 1298.312 ; gain = 0.000
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 1298.312 ; gain = 0.000
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++-+-----+------+
+| |Cell |Count |
++-+-----+------+
++-+-----+------+
+
+Report Instance Areas: 
++------+---------+-------+------+
+|      |Instance |Module |Cells |
++------+---------+-------+------+
+|1     |top      |       |     0|
++------+---------+-------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 1298.312 ; gain = 0.000
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 57 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 1298.312 ; gain = 0.000
+Synthesis Optimization Complete : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 1298.312 ; gain = 0.000
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1298.312 ; gain = 0.000
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1298.312 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Synth Design complete, checksum: 11b1dbff
+INFO: [Common 17-83] Releasing license: Synthesis
+39 Infos, 57 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 1298.312 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'C:/Users/Yara2005/Project 1/Computer-Architecture-Project-1/Project_1/Project_1.runs/synth_1/Single_Cycle_P.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_utilization -file Single_Cycle_P_utilization_synth.rpt -pb Single_Cycle_P_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Sun Nov  2 09:11:12 2025...
