@@ -39,8 +39,9 @@ output reg[3:0] ALUSel
         else
         ALUSel=4'b0010;
     end
-    3'b111: ALUSel=4'b111;
+    3'b111: ALUSel=4'b0000;
     3'b110: ALUSel=4'b0001;
+    default: ALUSel=4'b0000;
     endcase
     end 
     default: ALUSel=4'b0000;
