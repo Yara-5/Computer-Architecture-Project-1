@@ -1,14 +1,15 @@
-
-*** Running vivado
-    with args -log Processor.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source Processor.tcl
-
-
-
-****** Vivado v2022.1 (64-bit)
-  **** SW Build 3526262 on Mon Apr 18 15:48:16 MDT 2022
-  **** IP Build 3524634 on Mon Apr 18 20:55:01 MDT 2022
-    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
-
+#-----------------------------------------------------------
+# Vivado v2022.1 (64-bit)
+# SW Build 3526262 on Mon Apr 18 15:48:16 MDT 2022
+# IP Build 3524634 on Mon Apr 18 20:55:01 MDT 2022
+# Start of session at: Wed Nov  5 08:52:34 2025
+# Process ID: 19876
+# Current directory: C:/Users/Yara2005/Project 1/Computer-Architecture-Project-1/Project_1/Project_1.runs/synth_1
+# Command line: vivado.exe -log Processor.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source Processor.tcl
+# Log file: C:/Users/Yara2005/Project 1/Computer-Architecture-Project-1/Project_1/Project_1.runs/synth_1/Processor.vds
+# Journal file: C:/Users/Yara2005/Project 1/Computer-Architecture-Project-1/Project_1/Project_1.runs/synth_1\vivado.jou
+# Running On: CSE-P07-2168-11, OS: Windows, CPU Frequency: 2112 MHz, CPU Physical cores: 20, Host memory: 34031 MB
+#-----------------------------------------------------------
 source Processor.tcl -notrace
 Command: read_checkpoint -auto_incremental -incremental C:/Users/Yara2005/Project_1/Project_1.srcs/utils_1/imports/synth_1/Single_Cycle_P.dcp
 INFO: [Vivado 12-5825] Read reference checkpoint from C:/Users/Yara2005/Project_1/Project_1.srcs/utils_1/imports/synth_1/Single_Cycle_P.dcp for incremental synthesis
