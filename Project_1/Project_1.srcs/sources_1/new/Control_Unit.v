@@ -1,42 +1,40 @@
 `timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 10/07/2025 04:39:14 PM
-// Design Name: 
-// Module Name: Control_Unit
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
+`include "defines.v"
+/*******************************************************************
+*
+* Module: Processor.v
+* Project: Project_1
+* Authors:  Yara Abdelkader     - yara2005@aucegypt.edu
+            Ahmed Bamhdaf       - 
+* Description: Top module that implements all the processor's functionalities
+*
+* Change history:   10/21/25    - Initial Implementation
+                    11/9/25     - Adding new formats and signals
+*
+**********************************************************************/
 
 
 module Control_Unit(
-input [6:2] Inst,
+input [6:2] IR,
 output reg Branch,MemRead, MemToReg,
 output reg [1:0] ALUOp,
-output reg MemWrite, ALUSrc, RegWrite
+output reg MemWrite, ALUSrc, RegWrite,
+output reg  auipc, lui, jalr, writePC
     );
     
     always@* begin
-    case(Inst)
-    5'b01100: {Branch,MemRead, MemToReg,ALUOp, MemWrite, ALUSrc, RegWrite}=8'b00010001 ;
-    5'b00000: {Branch,MemRead, MemToReg,ALUOp, MemWrite, ALUSrc, RegWrite}=8'b01100011 ;
-    5'b01000: {Branch,MemRead, MemToReg,ALUOp, MemWrite, ALUSrc, RegWrite}=8'b00x00110 ;
-    5'b11000: {Branch,MemRead, MemToReg,ALUOp, MemWrite, ALUSrc, RegWrite}=8'b10x01000 ;
-    default: {Branch,MemRead, MemToReg,ALUOp, MemWrite, ALUSrc, RegWrite}=8'b00000000 ;
+    case(IR)
+    `OPCODE_Arith_R: {Branch,MemRead, MemToReg,ALUOp, MemWrite, ALUSrc, RegWrite, auipc, lui, jalr, writePC}=12'b000100010000 ;
+    `OPCODE_Arith_I: {Branch,MemRead, MemToReg,ALUOp, MemWrite, ALUSrc, RegWrite, auipc, lui, jalr, writePC}=12'b000100010000 ;
+    `OPCODE_Load: {Branch,MemRead, MemToReg,ALUOp, MemWrite, ALUSrc, RegWrite, auipc, lui, jalr, writePC}=12'b011000110000 ;
+    `OPCODE_Store: {Branch,MemRead, MemToReg,ALUOp, MemWrite, ALUSrc, RegWrite, auipc, lui, jalr, writePC}=12'b00x00110xx0x ;
+    `OPCODE_Branch: {Branch,MemRead, MemToReg,ALUOp, MemWrite, ALUSrc, RegWrite, auipc, lui, jalr, writePC}=12'b10x01000xx0x ;
+    `OPCODE_JALR: {Branch,MemRead, MemToReg,ALUOp, MemWrite, ALUSrc, RegWrite, auipc, lui, jalr, writePC}=12'b000100010011 ;
+    `OPCODE_JAL: {Branch,MemRead, MemToReg,ALUOp, MemWrite, ALUSrc, RegWrite, auipc, lui, jalr, writePC}=12'b000100010001 ;
+    `OPCODE_AUIPC: {Branch,MemRead, MemToReg,ALUOp, MemWrite, ALUSrc, RegWrite, auipc, lui, jalr, writePC}=12'b000100011000 ;
+    `OPCODE_LUI: {Branch,MemRead, MemToReg,ALUOp, MemWrite, ALUSrc, RegWrite, auipc, lui, jalr, writePC}=12'b000100010100 ;
+    default: {Branch,MemRead, MemToReg,ALUOp, MemWrite, ALUSrc, RegWrite, auipc, lui, jalr, writePC}=12'b000000000000 ;
     endcase
-    
-    
     end
     
 endmodule

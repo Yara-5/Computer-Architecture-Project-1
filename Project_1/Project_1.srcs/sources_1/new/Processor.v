@@ -36,10 +36,10 @@ input clk, reset
     Register_File rf(writedata, inst[11:7], inst[19:15], inst[24:20],regwrite, clk, reset, readdata1, readdata2);
     StoreLoadControl slc(.fun3(inst[`IR_funct3]), .whb(whb), .bsigned(bsigned), .hsigned(hsigned));
     DataMem dm(clk,  MemRead,  MemWrite, whb, ALUResult[7:0] , readdata2, MemDataOut);
-    prv32_ALU a(.a(readdata1), .b(ALUIn2), .shamt(ALUIn2[4:0]), .r(ALUResult), .cf(), .zf(), .vf(), .sf(), .alufn(ALUSel));
+    prv32_ALU a(.a(readdata1), .b(ALUIn2), .shamt(ALUIn2[4:0]), .r(ALUResult), .cf(cf), .zf(zf), .vf(vf), .sf(sf), .alufn(ALUSel));
     ALU_Control AC(ALUOp, inst[14:12] , inst[30], ALUSel);
     shift_left sl(Immead, BImm);
-    Control_Unit cu(inst[6:2], Branch,MemRead, MemToReg, ALUOp, MemWrite, ALUSrc, regwrite);
+    Control_Unit cu(inst[6:2], Branch,MemRead, MemToReg, ALUOp, MemWrite, ALUSrc, regwrite, auipc, lui, jalr, writePC);
     rv32_ImmGen ig(inst,Immead);
     multiplexer #(32) m1(readdata2, Immead, ALUSrc, ALUIn2);
     assign selMux2 = zf & Branch;

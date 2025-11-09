@@ -87,10 +87,10 @@ OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
 read_verilog -library xil_defaultlib {
   C:/Users/Yara2005/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/ALU_Control.v
+  C:/Users/Yara2005/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/defines.v
   C:/Users/Yara2005/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/Control_Unit.v
   C:/Users/Yara2005/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/DataMem.v
   C:/Users/Yara2005/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/FullAdder-1-1.v
-  C:/Users/Yara2005/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/defines.v
   C:/Users/Yara2005/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/ImmGen.v
   C:/Users/Yara2005/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/InstMem.v
   C:/Users/Yara2005/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/RCA-1.v
