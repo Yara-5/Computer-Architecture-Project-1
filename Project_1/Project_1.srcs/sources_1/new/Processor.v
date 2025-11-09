@@ -1,4 +1,5 @@
 `timescale 1ns / 1ps
+`include "defines.v"
 /*******************************************************************
 *
 * Module: Processor.v
@@ -9,6 +10,7 @@
 *
 * Change history:   10/21/25    - Initial Implementation
 *                   11/5/25     - Whole ALU added
+                    11/9/25     - lui, jal, jalr, auipc, lbu, lhu instructions added
 *
 **********************************************************************/
 
@@ -18,21 +20,22 @@ input clk, reset
     
     wire [31:0] currentAdrs, futAdrs;
     wire [31:0] inst, readdata1, readdata2;
-    wire [31:0] writedata, dataMemAdrs, memDataIn, MemDataOut, Immead, BImm;
-    wire regwrite, MemRead, MemWrite;
+    wire [31:0] writedata, dataMemAdrs, memDataIn, MemDataOut, Immead, BImm, dataFromMem;
+    wire regwrite, MemRead, MemWrite, bsigned, hsigned;
     wire cf, zf, vf, sf;
     wire [31:0]ALUIn2, ALUResult;
     wire [3:0]ALUSel;
-    wire Branch, MemToReg, ALUSrc, selMux2, selMux6;
-    wire [1:0] ALUOp;
+    wire Branch, MemToReg, ALUSrc, selMux2, selMux6, selMux8, selMux9;
+    wire [1:0] ALUOp, whb;
     wire [31:0] addOut4, addOutB;
     wire auipc, lui, jalr, writePC;
-    wire [31:0]wm2, wm3, wm5, wm6;
+    wire [31:0]wm2, wm3, wm5, wm6, wm8;
     
     register #(32) PC( .D(futAdrs), .load(1) , .clk(clk), .reset(reset), .Q(currentAdrs) );
     InstMem im(currentAdrs[7:2], inst);
     Register_File rf(writedata, inst[11:7], inst[19:15], inst[24:20],regwrite, clk, reset, readdata1, readdata2);
-    DataMem dm(clk,  MemRead,  MemWrite, ALUResult[7:2] , readdata2, MemDataOut);
+    StoreLoadControl slc(.fun3(inst[`IR_funct3]), .whb(whb), .bsigned(bsigned), .hsigned(hsigned));
+    DataMem dm(clk,  MemRead,  MemWrite, whb, ALUResult[7:0] , readdata2, MemDataOut);
     prv32_ALU a(.a(readdata1), .b(ALUIn2), .shamt(ALUIn2[4:0]), .r(ALUResult), .cf(), .zf(), .vf(), .sf(), .alufn(ALUSel));
     ALU_Control AC(ALUOp, inst[14:12] , inst[30], ALUSel);
     shift_left sl(Immead, BImm);
@@ -41,12 +44,17 @@ input clk, reset
     multiplexer #(32) m1(readdata2, Immead, ALUSrc, ALUIn2);
     assign selMux2 = zf & Branch;
     assign selMux6 = writePC | auipc;
-    multiplexer #(32) m2(addOut4, addOutB, selMux2, wm2);
-    multiplexer #(32) m4(wm2, ALUResult, jalr, futAdrs);
-    multiplexer #(32) m3(addOut4, addOutB, auipc, wm3);
-    multiplexer #(32) m5(ALUResult, Immead, lui, wm5);
-    multiplexer #(32) m6(wm5, wm3, selMux6, wm6);
-    multiplexer #(32) m7(wm6, MemDataOut, MemToReg, writedata);
+    assign selMux8 = bsigned & MemDataOut[7];
+    assign selMux9 = hsigned & MemDataOut[15];
+
+    multiplexer #(32) m2(addOut4, addOutB, selMux2, wm2);       // choosing future address
+    multiplexer #(32) m4(wm2, ALUResult, jalr, futAdrs);        // choosing future address
+    multiplexer #(32) m3(addOut4, addOutB, auipc, wm3);             // choosing write data
+    multiplexer #(32) m5(ALUResult, Immead, lui, wm5);              // choosing write data
+    multiplexer #(32) m6(wm5, wm3, selMux6, wm6);                   // choosing write data
+    multiplexer #(32) m7(wm6, dataFromMem, MemToReg, writedata);     // choosing write data
+    multiplexer #(32) m8(MemDataOut, {24'hFFFFFF,MemDataOut[7:0]}, selMux8, wm8);       // choosing dataFromMem
+    multiplexer #(32) m9(wm8, {16'hFFFF,MemDataOut[15:0]}, selMux9, dataFromMem);       // choosing dataFromMem
     RCA #(32) add4(currentAdrs, 32'd4, 1'b0, addOut4);
     RCA #(32) addBranch(currentAdrs, BImm, 1'b0, addOutB);
    

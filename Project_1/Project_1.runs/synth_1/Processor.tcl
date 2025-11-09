@@ -95,6 +95,7 @@ read_verilog -library xil_defaultlib {
   C:/Users/Yara2005/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/InstMem.v
   C:/Users/Yara2005/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/RCA-1.v
   C:/Users/Yara2005/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/Register_File.v
+  C:/Users/Yara2005/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/StoreLoadControl.v
   C:/Users/Yara2005/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/flipflop.v
   C:/Users/Yara2005/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/multiplexer.v
   C:/Users/Yara2005/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/prv32_ALU.v
