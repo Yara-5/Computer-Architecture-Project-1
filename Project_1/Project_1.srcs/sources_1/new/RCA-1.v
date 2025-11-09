@@ -24,7 +24,7 @@ module RCA #(parameter N = 8)(
 input [N-1:0] A,
 input [N-1:0] B,
 input c0,
-output [N:0] Sum
+output [N-1:0] Sum
     );
     
 wire [N:0]Cin;
@@ -35,6 +35,6 @@ for (i=0; i<N; i=i+1) begin
 FullAdder FA(.A(A[i]), .B(B[i]),.C(Cin[i]), .sum(Sum[i]), .Cout (Cin[i+1]));
 end
 endgenerate
-assign Sum[N]=Cin[N];
+//assign Sum[N]=Cin[N];
     
 endmodule

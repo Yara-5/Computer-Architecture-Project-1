@@ -23,9 +23,11 @@ input clk, reset
     wire cf, zf, vf, sf;
     wire [31:0]ALUIn2, ALUResult;
     wire [3:0]ALUSel;
-    wire Branch, MemToReg, ALUSrc, selMux2;
+    wire Branch, MemToReg, ALUSrc, selMux2, selMux6;
     wire [1:0] ALUOp;
     wire [31:0] addOut4, addOutB;
+    wire auipc, lui, jalr, writePC;
+    wire [31:0]wm2, wm3, wm5, wm6;
     
     register #(32) PC( .D(futAdrs), .load(1) , .clk(clk), .reset(reset), .Q(currentAdrs) );
     InstMem im(currentAdrs[7:2], inst);
@@ -38,8 +40,13 @@ input clk, reset
     rv32_ImmGen ig(inst,Immead);
     multiplexer #(32) m1(readdata2, Immead, ALUSrc, ALUIn2);
     assign selMux2 = zf & Branch;
-    multiplexer #(32) m2(addOut4, addOutB, selMux2, futAdrs);
-    multiplexer #(32) m3(ALUResult, MemDataOut, MemToReg, writedata);
+    assign selMux6 = writePC | auipc;
+    multiplexer #(32) m2(addOut4, addOutB, selMux2, wm2);
+    multiplexer #(32) m4(wm2, ALUResult, jalr, futAdrs);
+    multiplexer #(32) m3(addOut4, addOutB, auipc, wm3);
+    multiplexer #(32) m5(ALUResult, Immead, lui, wm5);
+    multiplexer #(32) m6(wm5, wm3, selMux6, wm6);
+    multiplexer #(32) m7(wm6, MemDataOut, MemToReg, writedata);
     RCA #(32) add4(currentAdrs, 32'd4, 1'b0, addOut4);
     RCA #(32) addBranch(currentAdrs, BImm, 1'b0, addOutB);
    
