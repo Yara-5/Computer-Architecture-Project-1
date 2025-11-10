@@ -4,11 +4,9 @@
 * Module: Processor.v
 * Project: Project_1
 * Authors:  Yara Abdelkader     - yara2005@aucegypt.edu
-            Ahmed Bamhdaf       - 
 * Description: Sets load/store related flags
 *
 * Change history:   11/19/25    - Initial Implementation
-
 *
 **********************************************************************/
 

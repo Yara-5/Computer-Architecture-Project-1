@@ -1,23 +1,14 @@
 `timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 11/10/2025 01:35:08 PM
-// Design Name: 
-// Module Name: BranchUnit
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
+/*******************************************************************
+*
+* Module: BranchUnit.v
+* Project: Project_1
+* Authors:  Ahmed Bamhdaf       - 
+* Description: Decides whether or not to branch depending on the branch instruction type
+*
+* Change history:   11/10/25    - Initial Implementation
+*
+**********************************************************************/
 
 
 module BranchUnit(

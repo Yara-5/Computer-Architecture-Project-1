@@ -18,11 +18,11 @@ module DataMem
 input [7:0] addr, input [31:0] data_in, output reg [31:0] data_out);
     reg [7:0] mem [0:255];
     initial begin
-        mem[0]=32'd16;
-        mem[1]=32'd4;
-        mem[2]=32'd25;
-        mem[6]=4;
-        mem[7]=1;
+        {mem[3],mem[2],mem[1],mem[0]}=32'd16;
+        {mem[7],mem[6],mem[5],mem[4]}=32'd4;
+        {mem[11],mem[10],mem[9],mem[8]}=32'd25;
+        mem[24]=8'd4;
+        mem[28]=8'd1;
     end
 
     always@* begin
