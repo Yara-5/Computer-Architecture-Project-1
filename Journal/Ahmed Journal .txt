@@ -1,0 +1,9 @@
+10/Nov : Complete ALU control (handle both R and I type)
+	Debugged the issues in some modules.
+	Worked on the report.
+	Tested the instruction throughout different programs.
+	Handled the ALU_Control modifications.
+
+
+9/Nov : Added other branches (BEQ,BNE,BLT,BGE,BLTU,BGEU ) 
+	Handle I-type instructions (through control unit)
