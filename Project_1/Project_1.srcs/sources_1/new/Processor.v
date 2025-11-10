@@ -20,7 +20,7 @@ input clk, reset
     
     wire [31:0] currentAdrs, futAdrs;
     wire [31:0] inst, readdata1, readdata2;
-    wire [31:0] writedata, dataMemAdrs, memDataIn, MemDataOut, Immead, BImm, dataFromMem;
+    wire [31:0] writedata, dataMemAdrs, memDataIn, MemDataOut, Immead, dataFromMem;
     wire regwrite, MemRead, MemWrite, bsigned, hsigned;
     wire cf, zf, vf, sf, branch_taken;
     wire [31:0]ALUIn2, ALUResult;
@@ -38,7 +38,6 @@ input clk, reset
     DataMem dm(clk,  MemRead,  MemWrite, whb, ALUResult[7:0] , readdata2, MemDataOut);
     prv32_ALU a(.a(readdata1), .b(ALUIn2), .shamt(ALUIn2[4:0]), .r(ALUResult), .cf(cf), .zf(zf), .vf(vf), .sf(sf), .alufn(ALUSel));
     ALU_Control AC(ALUOp, inst[14:12] , inst[30], ALUSel);
-    shift_left sl(Immead, BImm);
     Control_Unit cu(inst[6:2], Branch,MemRead, MemToReg, ALUOp, MemWrite, ALUSrc, regwrite, auipc, lui, jalr, writePC);
     BranchUnit bu(.funct3(inst[`IR_funct3]), .Z(zf),.C(cf),.V(vf),.S(sf),.branch_taken(branch_taken) );
     rv32_ImmGen ig(inst,Immead);
@@ -57,7 +56,7 @@ input clk, reset
     multiplexer #(32) m8(MemDataOut, {24'hFFFFFF,MemDataOut[7:0]}, selMux8, wm8);       // choosing dataFromMem
     multiplexer #(32) m9(wm8, {16'hFFFF,MemDataOut[15:0]}, selMux9, dataFromMem);       // choosing dataFromMem
     RCA #(32) add4(currentAdrs, 32'd4, 1'b0, addOut4);
-    RCA #(32) addBranch(currentAdrs, BImm, 1'b0, addOutB);
+    RCA #(32) addBranch(currentAdrs, Immead, 1'b0, addOutB);
    
     
 endmodule

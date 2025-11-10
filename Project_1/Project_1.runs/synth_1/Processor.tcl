@@ -101,7 +101,6 @@ read_verilog -library xil_defaultlib {
   C:/Users/Yara2005/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/multiplexer.v
   C:/Users/Yara2005/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/prv32_ALU.v
   C:/Users/Yara2005/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/register.v
-  C:/Users/Yara2005/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/shift_left.v
   C:/Users/Yara2005/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/shifter.v
   C:/Users/Yara2005/Computer-Architecture-Project-1/Project_1/Project_1.srcs/sources_1/new/Processor.v
 }
