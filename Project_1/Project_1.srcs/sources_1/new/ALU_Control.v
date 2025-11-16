@@ -1,29 +1,23 @@
 `timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 10/07/2025 04:39:43 PM
-// Design Name: 
-// Module Name: ALU_Control
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
+/*******************************************************************
+*
+* Module: Processor.v
+* Project: Project_1
+* Authors:  Yara Abdelkader     - yara2005@aucegypt.edu
+            Ahmed Bamhdaf       - 
+* Description: Top module that implements all the processor's functionalities
+*
+* Change history:   10/21/25    - Initial Implementation
+                    11/9/25     - Adding all instructions
+                    11/16/25    - fixing addi
+*
+**********************************************************************/
 
 
 module ALU_Control(
 input [1:0] ALUOp,
 input [14:12] Inst,
-input Inst30,
+input Inst30, Inst5,
 output reg[3:0] ALUSel
     );
     
@@ -34,7 +28,7 @@ output reg[3:0] ALUSel
     2'b10: begin
     case(Inst)
     3'b000: begin
-        if(Inst30)
+        if(Inst30 & Inst[5])
         ALUSel=4'b00_01; // sub
         else ALUSel=4'b0000; // add
         end

@@ -11,6 +11,7 @@
 * Change history:   10/21/25    - Initial Implementation
 *                   11/5/25     - Whole ALU added
                     11/9/25     - lui, jal, jalr, auipc, lbu, lhu instructions added
+                    11/16/25    - adjusting ALU_Control inputs
 *
 **********************************************************************/
 
@@ -37,7 +38,7 @@ input clk, reset
     StoreLoadControl slc(.fun3(inst[`IR_funct3]), .whb(whb), .bsigned(bsigned), .hsigned(hsigned));
     DataMem dm(clk,  MemRead,  MemWrite, whb, ALUResult[7:0] , readdata2, MemDataOut);
     prv32_ALU a(.a(readdata1), .b(ALUIn2), .shamt(ALUIn2[4:0]), .r(ALUResult), .cf(cf), .zf(zf), .vf(vf), .sf(sf), .alufn(ALUSel));
-    ALU_Control AC(ALUOp, inst[14:12] , inst[30], ALUSel);
+    ALU_Control AC(ALUOp, inst[14:12] , inst[30], inst[5], ALUSel);
     Control_Unit cu(inst[6:2], Branch,MemRead, MemToReg, ALUOp, MemWrite, ALUSrc, regwrite, auipc, lui, jalr, writePC, syst);
     BranchUnit bu(.funct3(inst[`IR_funct3]), .Z(zf),.C(cf),.V(vf),.S(sf),.branch_taken(branch_taken) );
     rv32_ImmGen ig(inst,Immead);

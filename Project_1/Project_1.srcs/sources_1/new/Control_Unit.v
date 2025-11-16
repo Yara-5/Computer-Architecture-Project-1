@@ -10,6 +10,7 @@
 *
 * Change history:   10/21/25    - Initial Implementation
                     11/9/25     - Adding new formats and signals
+                    11/16/25    - fixing fence opcode
 *
 **********************************************************************/
 
@@ -34,7 +35,7 @@ output reg  auipc, lui, jalr, writePC, syst
     `OPCODE_AUIPC:      {Branch,MemRead, MemToReg,ALUOp, MemWrite, ALUSrc, RegWrite, auipc, lui, jalr, writePC, syst}=13'b000xx0x110000 ;
     `OPCODE_LUI:        {Branch,MemRead, MemToReg,ALUOp, MemWrite, ALUSrc, RegWrite, auipc, lui, jalr, writePC, syst}=13'b000xx0x101000 ;
     `OPCODE_SYSTEM:     {Branch,MemRead, MemToReg,ALUOp, MemWrite, ALUSrc, RegWrite, auipc, lui, jalr, writePC, syst}=13'b0000000000001 ;
-    5'b00_111:          {Branch,MemRead, MemToReg,ALUOp, MemWrite, ALUSrc, RegWrite, auipc, lui, jalr, writePC, syst}=13'b0000000000001 ;
+    5'b000_11:          {Branch,MemRead, MemToReg,ALUOp, MemWrite, ALUSrc, RegWrite, auipc, lui, jalr, writePC, syst}=13'b0000000000001 ;
     default:            {Branch,MemRead, MemToReg,ALUOp, MemWrite, ALUSrc, RegWrite, auipc, lui, jalr, writePC, syst}=13'b0000000000000 ;
     endcase
     end
