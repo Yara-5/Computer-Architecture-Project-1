@@ -101,9 +101,9 @@ input clk, reset
     
     
     wire [31:0] MEM_WB_Mem_out, MEM_WB_ALU_out, MEM_WB_Imm, MEM_WB_BranchAddOut, MEM_WB_addOut4;
-    wire [4:0] MEM_WB_Ctrl;
+    wire [6:0] MEM_WB_Ctrl;
 //    wire [4:0] MEM_WB_Rd;
-    register #(170) MEM_WB (.clk(clk),.reset(reset),.load(1'b1),
+    register #(172) MEM_WB (.clk(clk),.reset(reset),.load(1'b1),
     .D({EX_MEM_Ctrl[7], EX_MEM_Ctrl[5:0], dataFromMem, EX_MEM_ALU_out, EX_MEM_Rd, EX_MEM_Imm, EX_MEM_BranchAddOut, EX_MEM_addOut4 }),
     .Q({MEM_WB_Ctrl,MEM_WB_Mem_out, MEM_WB_ALU_out, MEM_WB_Rd, MEM_WB_Imm, MEM_WB_BranchAddOut, MEM_WB_addOut4}) );
 
@@ -113,7 +113,7 @@ input clk, reset
     multiplexer #(32) m3(MEM_WB_addOut4, MEM_WB_BranchAddOut, MEM_WB_Ctrl[2], wm3);         // choosing write data
     multiplexer #(32) m5(MEM_WB_ALU_out, MEM_WB_Imm, MEM_WB_Ctrl[1], wm5);                  // choosing write data
     multiplexer #(32) m6(wm5, wm3, selMux6, wm6);                                           // choosing write data
-    multiplexer #(32) m7(wm6, MEM_WB_Mem_out, MEM_WB_Ctrl[4], writedata);                   // choosing write data    
+    multiplexer #(32) m7(wm6, MEM_WB_Mem_out, MEM_WB_Ctrl[6], writedata);                   // choosing write data    
 
     
 endmodule
