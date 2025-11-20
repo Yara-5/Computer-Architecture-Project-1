@@ -28,8 +28,8 @@ output reg[3:0] ALUSel
     2'b10: begin
     case(Inst)
     3'b000: begin
-        if(Inst30 & Inst[5])
-        ALUSel=4'b00_01; // sub
+        if(Inst30 & Inst5)
+            ALUSel=4'b00_01; // sub
         else ALUSel=4'b0000; // add
         end
     3'b001: ALUSel = 4'b1000;  // SLL

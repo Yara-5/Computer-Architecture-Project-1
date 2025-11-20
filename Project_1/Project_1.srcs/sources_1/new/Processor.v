@@ -57,7 +57,7 @@ input clk, reset
     
     
     rv32_ImmGen ig(IF_ID_Inst,Immead);
-    Register_File rf(writedata, MEM_WB_Rd, IF_ID_Inst[19:15], IF_ID_Inst[24:20],MEM_WB_Ctrl[3], clk, reset, readdata1, readdata2);
+    Register_File rf(writedata, MEM_WB_Rd, IF_ID_Inst[19:15], IF_ID_Inst[24:20],MEM_WB_Ctrl[5], clk, reset, readdata1, readdata2);
     Control_Unit cu(IF_ID_Inst[6:2], Branch,MemRead, MemToReg, ALUOp, MemWrite, ALUSrc, regwrite, auipc, lui, jalr, writePC, syst);
     
     
@@ -108,10 +108,10 @@ input clk, reset
     .Q({MEM_WB_Ctrl,MEM_WB_Mem_out, MEM_WB_ALU_out, MEM_WB_Rd, MEM_WB_Imm, MEM_WB_BranchAddOut, MEM_WB_addOut4}) );
 
     
-    assign selMux6 = MEM_WB_Ctrl[0] | MEM_WB_Ctrl[2];
+    assign selMux6 = MEM_WB_Ctrl[1] | MEM_WB_Ctrl[4];
 
-    multiplexer #(32) m3(MEM_WB_addOut4, MEM_WB_BranchAddOut, MEM_WB_Ctrl[2], wm3);         // choosing write data
-    multiplexer #(32) m5(MEM_WB_ALU_out, MEM_WB_Imm, MEM_WB_Ctrl[1], wm5);                  // choosing write data
+    multiplexer #(32) m3(MEM_WB_addOut4, MEM_WB_BranchAddOut, MEM_WB_Ctrl[4], wm3);         // choosing write data
+    multiplexer #(32) m5(MEM_WB_ALU_out, MEM_WB_Imm, MEM_WB_Ctrl[3], wm5);                  // choosing write data
     multiplexer #(32) m6(wm5, wm3, selMux6, wm6);                                           // choosing write data
     multiplexer #(32) m7(wm6, MEM_WB_Mem_out, MEM_WB_Ctrl[6], writedata);                   // choosing write data    
 
