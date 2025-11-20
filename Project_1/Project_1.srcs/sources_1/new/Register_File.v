@@ -5,7 +5,7 @@
 * Project: Project_1
 * Authors:  Yara Abdelkader     - yara2005@aucegypt.edu
             Ahmed Bamhdaf       - 
-* Description: Top module that implements all the processor's functionalities
+* Description: Has the 32 registers the processor uses
 *
 * Change history:   10/7/25    - Initial Implementation
                     11/20/25    - writing at clock negative edge

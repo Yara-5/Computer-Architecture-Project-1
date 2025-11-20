@@ -24,13 +24,13 @@ input clk, reset
     wire [31:0] writedata, dataMemAdrs, memDataIn, MemDataOut, Immead, dataFromMem;
     wire regwrite, MemRead, MemWrite, bsigned, hsigned;
     wire cf, zf, vf, sf, branch_taken;
-    wire [31:0]ALUIn2, ALUResult;
+    wire [31:0] ALUIn1, ALUIn2, ALUResult, realEXReg2;
     wire [3:0]ALUSel;
     wire Branch, MemToReg, ALUSrc, selMux2, selMux6, selMux8, selMux9, selMux10, syst;
-    wire [1:0] ALUOp, whb;
+    wire [1:0] ALUOp, whb, forwardA, forwardB;
     wire [31:0] addOut4, addOutB;
     wire auipc, lui, jalr, writePC;
-    wire [31:0]wm2, wm3, wm4, wm5, wm6, wm8;
+    wire [31:0]wm2, wm3, wm4, wm5, wm6, wm8, wm11, wm13;
     
   
   
@@ -72,8 +72,13 @@ input clk, reset
     .Q( {ID_EX_Ctrl,ID_EX_PC,ID_EX_RegR1,ID_EX_RegR2, ID_EX_Imm, ID_EX_Func,ID_EX_Rs1,ID_EX_Rs2,ID_EX_Rd, ID_EX_addOut4}) );
     
     
-    multiplexer #(32) m1(ID_EX_RegR2, ID_EX_Imm, ID_EX_Ctrl[6], ALUIn2);
-    prv32_ALU a(.a(ID_EX_RegR1), .b(ALUIn2), .shamt(ALUIn2[4:0]), .r(ALUResult), .cf(cf), .zf(zf), .vf(vf), .sf(sf), .alufn(ALUSel));
+    ForwardingUnit fu(ID_EX_Rs1, ID_EX_Rs2, EX_MEM_Rd, MEM_WB_Rd, EX_MEM_Ctrl[5], MEM_WB_Ctrl[5], forwardA, forwardB);
+    multiplexer #(32) m11(ID_EX_RegR1, writedata, forwardA[0], wm11);     // choosing ALU source 1
+    multiplexer #(32) m12(wm11, EX_MEM_ALU_out, forwardA[1], ALUIn1);     // choosing ALU source 1
+    multiplexer #(32) m13(ID_EX_RegR2, writedata, forwardB[0], wm13);           // choosing ALU source 2
+    multiplexer #(32) m14(wm13, EX_MEM_ALU_out, forwardB[1], realEXReg2);       // choosing ALU source 2
+    multiplexer #(32) m1(realEXReg2, ID_EX_Imm, ID_EX_Ctrl[6], ALUIn2);         // choosing ALU source 2
+    prv32_ALU a(.a(ALUIn1), .b(ALUIn2), .shamt(ALUIn2[4:0]), .r(ALUResult), .cf(cf), .zf(zf), .vf(vf), .sf(sf), .alufn(ALUSel));
     ALU_Control AC(ID_EX_Ctrl[9:8], ID_EX_Func[4:2] , ID_EX_Func[1], ID_EX_Func[0], ALUSel);
     StoreLoadControl slc(.fun3(ID_EX_Func[4:2]), .whb(whb), .bsigned(bsigned), .hsigned(hsigned));
     RCA #(32) addBranch(ID_EX_PC, ID_EX_Imm, 1'b0, addOutB);
@@ -85,7 +90,7 @@ input clk, reset
     wire [3:0] EX_MEM_Flags, EX_MEM_StoLoaCtrl;
     wire [2:0] EX_MEM_Func3;
     register #(186) EX_MEM (.clk(clk),.reset(reset),.load(1'b1),
-    .D({ID_EX_Ctrl[12:10], ID_EX_Ctrl[7], ID_EX_Ctrl[5:0],whb, bsigned, hsigned, addOutB, cf, zf, vf, sf, ALUResult,ID_EX_RegR2, ID_EX_Rd, ID_EX_Func[4:2], ID_EX_Imm, ID_EX_addOut4}),
+    .D({ID_EX_Ctrl[12:10], ID_EX_Ctrl[7], ID_EX_Ctrl[5:0],whb, bsigned, hsigned, addOutB, cf, zf, vf, sf, ALUResult,realEXReg2, ID_EX_Rd, ID_EX_Func[4:2], ID_EX_Imm, ID_EX_addOut4}),
     .Q({EX_MEM_Ctrl, EX_MEM_StoLoaCtrl, EX_MEM_BranchAddOut, EX_MEM_Flags, EX_MEM_ALU_out, EX_MEM_RegR2, EX_MEM_Rd, EX_MEM_Func3, EX_MEM_Imm, EX_MEM_addOut4}) );
     
     

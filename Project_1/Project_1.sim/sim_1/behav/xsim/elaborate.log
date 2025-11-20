@@ -19,6 +19,7 @@ Compiling module xil_defaultlib.rv32_ImmGen
 Compiling module xil_defaultlib.Register_File
 Compiling module xil_defaultlib.Control_Unit
 Compiling module xil_defaultlib.register(n=193)
+Compiling module xil_defaultlib.ForwardingUnit
 Compiling module xil_defaultlib.shifter
 Compiling module xil_defaultlib.prv32_ALU
 Compiling module xil_defaultlib.ALU_Control
