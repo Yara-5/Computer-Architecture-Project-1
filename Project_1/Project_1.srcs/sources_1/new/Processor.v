@@ -14,6 +14,7 @@
 //                    11/16/25    - adjusting ALU_Control inputs
 //                    11/18/25    - adding pipeline registers
 //                    11/20/25    - adding forwarding and single memory implementation
+//                    11/22/25    - implemented stalling for both load use and structural hazards
 //*
 //**********************************************************************/
 
@@ -32,8 +33,9 @@ input clk, reset
     wire [1:0] ALUOp, whb, SMem_whb, forwardA, forwardB;
     wire [31:0] addOut4, addOutB;
     wire auipc, lui, jalr, writePC, stall;
-    wire [31:0]wm2, wm3, wm4, wm5, wm8, wm11, wm13;
+    wire [31:0] wm2, wm3, wm4, wm5, wm8, wm11, wm13, wm18, wm19;
     wire [9:0] nextMEMcontrols;
+    wire [33:0] prevWritedata;
 
   
   
@@ -41,42 +43,43 @@ input clk, reset
     wire [31:0] EX_MEM_BranchAddOut, EX_MEM_ALU_out, EX_MEM_RegR2, EX_MEM_Imm, EX_MEM_addOut4;
     wire [9:0] EX_MEM_Ctrl;
     wire [4:0] MEM_WB_Rd;
+    wire [4:0] EX_MEM_Rd;
   
-  
-  
-  
-//    assign selMux10 = EX_MEM_Ctrl[0] | EX_MEM_Ctrl[2];
-   
-//    RCA #(32) add4(currentAdrs, 32'd4, 1'b0, addOut4);
-//    multiplexer #(32) m2(addOut4, EX_MEM_BranchAddOut, selMux2, wm2);       // choosing future address
-//    multiplexer #(32) m4(currentAdrs, ALUResult, EX_MEM_Ctrl[2], wm4);      // choosing future address
-//    multiplexer #(32) m10(wm2, wm4, selMux10, futAdrs);                     // choosing future address 
-//    register #(32) PC( .D(futAdrs), .load(1'b1) , .clk(clk), .reset(reset), .Q(currentAdrs) );
-//    InstMem im(currentAdrs[7:2], inst);
 
-    assign stall = EX_MEM_Ctrl[8] | EX_MEM_Ctrl[6];
+  
     assign selMux10 = EX_MEM_Ctrl[0] | EX_MEM_Ctrl[2];
    
     RCA #(32) add4(currentAdrs, 32'd4, 1'b0, addOut4);
-    multiplexer #(32) m2(addOut4, EX_MEM_BranchAddOut, selMux2, wm2);           // choosing future address
-    multiplexer #(32) m4(currentAdrs, EX_MEM_ALU_out, EX_MEM_Ctrl[2], wm4);     // choosing future address
-    multiplexer #(32) m10(wm2, wm4, selMux10, futAdrs);                         // choosing future address 
+    multiplexer #(32) m2(addOut4, EX_MEM_BranchAddOut, selMux2, wm2);       // choosing future address
+    multiplexer #(32) m4(currentAdrs, ALUResult, EX_MEM_Ctrl[2], wm4);      // choosing future address
+    multiplexer #(32) m10(wm2, wm4, selMux10, futAdrs);                     // choosing future address 
     register #(32) PC( .D(futAdrs), .load(~stall) , .clk(clk), .reset(reset), .Q(currentAdrs) );
-    SingleMemory sm(.clk(clk), .MemRead(~EX_MEM_Ctrl[6]), .MemWrite(EX_MEM_Ctrl[6]), .whb(SMem_whb), .addr(SMem_address[7:0]), .data_in(EX_MEM_RegR2), .data_out(MemDataOut));
-    multiplexer #(2) m15(2'b10, EX_MEM_Flags[3:2], stall, SMem_whb);
-    multiplexer #(32) m16(currentAdrs, EX_MEM_ALU_out, stall, SMem_address);
+    InstMem im(currentAdrs[7:2], inst);
 
-    //InstMem im(currentAdrs[7:2], inst);
+    assign stall = EX_MEM_Ctrl[8] | EX_MEM_Ctrl[6];
+
+//    assign selMux10 = EX_MEM_Ctrl[0] | EX_MEM_Ctrl[2];
+   
+//    RCA #(32) add4(currentAdrs, 32'd4, 1'b0, addOut4);
+//    multiplexer #(32) m2(addOut4, EX_MEM_BranchAddOut, selMux2, wm2);           // choosing future address
+//    multiplexer #(32) m4(currentAdrs, EX_MEM_ALU_out, EX_MEM_Ctrl[2], wm4);     // choosing future address
+//    multiplexer #(32) m10(wm2, wm4, selMux10, futAdrs);                         // choosing future address 
+//    register #(32) PC( .D(futAdrs), .load(~stall) , .clk(clk), .reset(reset), .Q(currentAdrs) );
+//    SingleMemory sm(.clk(clk), .MemRead(~EX_MEM_Ctrl[6]), .MemWrite(EX_MEM_Ctrl[6]), .whb(SMem_whb), .addr(SMem_address[7:0]), .data_in(EX_MEM_RegR2), .data_out(MemDataOut));
+//    multiplexer #(2) m15(2'b10, EX_MEM_Flags[3:2], stall, SMem_whb);
+//    multiplexer #(32) m16(currentAdrs, EX_MEM_ALU_out, stall, SMem_address);
+
+//    //InstMem im(currentAdrs[7:2], inst);
 
    
     wire [31:0] IF_ID_PC, IF_ID_Inst, IF_ID_addOut4;
-    register #(96) IF_ID (.clk(clk),.reset(reset),.load(~stall),.D({currentAdrs, MemDataOut, addOut4}),
+    register #(96) IF_ID (.clk(clk),.reset(reset),.load(~stall),.D({currentAdrs, inst, addOut4}),
     .Q({IF_ID_PC,IF_ID_Inst, IF_ID_addOut4}) );
     
     
     rv32_ImmGen ig(IF_ID_Inst,Immead);
     Register_File rf(writedata, MEM_WB_Rd, IF_ID_Inst[19:15], IF_ID_Inst[24:20],MEM_WB_Ctrl[0], clk, reset, readdata1, readdata2);
-    Control_Unit cu(IF_ID_Inst[6:2], Branch,MemRead, MemToReg, ALUOp, MemWrite, ALUSrc, regwrite, auipc, lui, jalr, writePC, syst);
+    Control_Unit cu(IF_ID_Inst[6:1], Branch,MemRead, MemToReg, ALUOp, MemWrite, ALUSrc, regwrite, auipc, lui, jalr, writePC, syst);
     
     
     wire [31:0] ID_EX_PC, ID_EX_RegR1, ID_EX_RegR2, ID_EX_Imm, ID_EX_addOut4;
@@ -91,9 +94,11 @@ input clk, reset
     
     
     ForwardingUnit fu(ID_EX_Rs1, ID_EX_Rs2, EX_MEM_Rd, MEM_WB_Rd, EX_MEM_Ctrl[5], MEM_WB_Ctrl[0], forwardA, forwardB);
-    multiplexer #(32) m11(ID_EX_RegR1, writedata, forwardA[0], wm11);     // choosing ALU source 1
-    multiplexer #(32) m12(wm11, writeResult, forwardA[1], ALUIn1);     // choosing ALU source 1
-    multiplexer #(32) m13(ID_EX_RegR2, writedata, forwardB[0], wm13);           // choosing ALU source 2
+    multiplexer #(32) m18(ID_EX_RegR1, prevWritedata[31:0], prevWritedata[33], wm18);    // in case of stall
+    multiplexer #(32) m11(wm18, writedata, forwardA[0], wm11);       // choosing ALU source 1
+    multiplexer #(32) m12(wm11, writeResult, forwardA[1], ALUIn1);          // choosing ALU source 1
+    multiplexer #(32) m19(ID_EX_RegR2, prevWritedata[31:0], prevWritedata[32], wm19);    // in case of stall
+    multiplexer #(32) m13(wm19, writedata, forwardB[0], wm13);           // choosing ALU source 2
     multiplexer #(32) m14(wm13, EX_MEM_ALU_out, forwardB[1], realEXReg2);       // choosing ALU source 2
     multiplexer #(32) m1(realEXReg2, ID_EX_Imm, ID_EX_Ctrl[6], ALUIn2);         // choosing ALU source 2
     prv32_ALU a(.a(ALUIn1), .b(ALUIn2), .shamt(ALUIn2[4:0]), .r(ALUResult), .cf(cf), .zf(zf), .vf(vf), .sf(sf), .alufn(ALUSel));
@@ -102,22 +107,25 @@ input clk, reset
     RCA #(32) addBranch(ID_EX_PC, ID_EX_Imm, 1'b0, addOutB);
     multiplexer #(10) m17 ({ID_EX_Ctrl[12:10], ID_EX_Ctrl[7], ID_EX_Ctrl[5:0]}, 10'b0000000000, stall, nextMEMcontrols); // flush in case of stall
 
+    register #(34) stau(.clk(clk), .reset(reset), .load(1'b1), 
+    .D({forwardA[0] & stall, forwardB[0] & stall, writedata}), .Q(prevWritedata));
+
 
     
 //    wire [31:0] EX_MEM_BranchAddOut, EX_MEM_ALU_out, EX_MEM_RegR2, EX_MEM_Imm, EX_MEM_addOut4;
 //    wire [9:0] EX_MEM_Ctrl;
-    wire [4:0] EX_MEM_Rd;
+//    wire [4:0] EX_MEM_Rd;
     wire [3:0] EX_MEM_Flags, EX_MEM_StoLoaCtrl;
     wire [2:0] EX_MEM_Func3;
     register #(186) EX_MEM (.clk(clk),.reset(reset),.load(1'b1),
-    .D({ID_EX_Ctrl[12:10], ID_EX_Ctrl[7], ID_EX_Ctrl[5:0],whb, bsigned, hsigned, addOutB, cf, zf, vf, sf, ALUResult,realEXReg2, ID_EX_Rd, ID_EX_Func[4:2], ID_EX_Imm, ID_EX_addOut4}),
+    .D({nextMEMcontrols, whb, bsigned, hsigned, addOutB, cf, zf, vf, sf, ALUResult,realEXReg2, ID_EX_Rd, ID_EX_Func[4:2], ID_EX_Imm, ID_EX_addOut4}),
     .Q({EX_MEM_Ctrl, EX_MEM_StoLoaCtrl, EX_MEM_BranchAddOut, EX_MEM_Flags, EX_MEM_ALU_out, EX_MEM_RegR2, EX_MEM_Rd, EX_MEM_Func3, EX_MEM_Imm, EX_MEM_addOut4}) );
     
     
     assign selMux8 = EX_MEM_StoLoaCtrl[1] & MemDataOut[7];
     assign selMux9 = EX_MEM_StoLoaCtrl[0] & MemDataOut[15];
     
-    //DataMem dm(clk,  EX_MEM_Ctrl[8], EX_MEM_Ctrl[6], EX_MEM_StoLoaCtrl[3:2], EX_MEM_ALU_out[7:0] , EX_MEM_RegR2, MemDataOut);
+    DataMem dm(clk,  EX_MEM_Ctrl[8], EX_MEM_Ctrl[6], EX_MEM_StoLoaCtrl[3:2], EX_MEM_ALU_out[7:0] , EX_MEM_RegR2, MemDataOut);
     multiplexer #(32) m8(MemDataOut, {24'hFFFFFF,MemDataOut[7:0]}, selMux8, wm8);                       // choosing dataFromMem           
     multiplexer #(32) m9(wm8, {16'hFFFF,MemDataOut[15:0]}, selMux9, dataFromMem);                       // choosing dataFromMem               
     BranchUnit bu(.funct3(EX_MEM_Func3), .Z(EX_MEM_Flags[2]),.C(EX_MEM_Flags[3]),.V(EX_MEM_Flags[1]),.S(EX_MEM_Flags[0]),.branch_taken(branch_taken) );
@@ -133,7 +141,7 @@ input clk, reset
     wire [31:0] MEM_WB_Mem_out, MEM_WB_Result;
     wire [1:0] MEM_WB_Ctrl;
 //    wire [4:0] MEM_WB_Rd;
-    register #(171) MEM_WB (.clk(clk),.reset(reset),.load(1'b1),
+    register #(103) MEM_WB (.clk(clk),.reset(reset),.load(1'b1),
     .D({EX_MEM_Ctrl[7], EX_MEM_Ctrl[5], dataFromMem, writeResult, EX_MEM_Rd }),
     .Q({MEM_WB_Ctrl,MEM_WB_Mem_out, MEM_WB_Result, MEM_WB_Rd}) );
 

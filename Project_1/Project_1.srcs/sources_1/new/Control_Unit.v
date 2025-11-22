@@ -16,7 +16,7 @@
 
 
 module Control_Unit(
-input [6:2] IR,
+input [6:1] IR,
 output reg Branch,MemRead, MemToReg,
 output reg [1:0] ALUOp,
 output reg MemWrite, ALUSrc, RegWrite,
@@ -24,10 +24,13 @@ output reg  auipc, lui, jalr, writePC, syst
     );
     
     always@* begin
-    case(IR)
+    case(IR[6:2])
     `OPCODE_Arith_R:    {Branch,MemRead, MemToReg,ALUOp, MemWrite, ALUSrc, RegWrite, auipc, lui, jalr, writePC, syst}=13'b0001000100000 ;
     `OPCODE_Arith_I:    {Branch,MemRead, MemToReg,ALUOp, MemWrite, ALUSrc, RegWrite, auipc, lui, jalr, writePC, syst}=13'b0001001100000 ;
-    `OPCODE_Load:       {Branch,MemRead, MemToReg,ALUOp, MemWrite, ALUSrc, RegWrite, auipc, lui, jalr, writePC, syst}=13'b0110001100000 ;
+    `OPCODE_Load:       if (IR[1])
+                            {Branch,MemRead, MemToReg,ALUOp, MemWrite, ALUSrc, RegWrite, auipc, lui, jalr, writePC, syst}=13'b0110001100000 ;
+                        else
+                            {Branch,MemRead, MemToReg,ALUOp, MemWrite, ALUSrc, RegWrite, auipc, lui, jalr, writePC, syst}=13'b0000000000000 ;
     `OPCODE_Store:      {Branch,MemRead, MemToReg,ALUOp, MemWrite, ALUSrc, RegWrite, auipc, lui, jalr, writePC, syst}=13'b00x00110xx000 ;
     `OPCODE_Branch:     {Branch,MemRead, MemToReg,ALUOp, MemWrite, ALUSrc, RegWrite, auipc, lui, jalr, writePC, syst}=13'b10x01000xx000 ;
     `OPCODE_JALR:       {Branch,MemRead, MemToReg,ALUOp, MemWrite, ALUSrc, RegWrite, auipc, lui, jalr, writePC, syst}=13'b0000001100110 ;
