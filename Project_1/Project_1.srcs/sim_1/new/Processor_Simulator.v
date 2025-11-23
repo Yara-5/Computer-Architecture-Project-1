@@ -13,13 +13,13 @@
 
 
 module Processor_Simulator();
-
-    Processor scp(clk, reset);
     
     reg clk;
     reg reset;
+
+    Processor scp(clk, reset);
     
-    localparam clk_per=20;
+    localparam clk_per=10;
     initial begin
         clk=1'b0;
         forever #(clk_per/2) clk=~clk;

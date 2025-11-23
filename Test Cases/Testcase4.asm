@@ -5,9 +5,9 @@ add x3, x0, x0
 blt x1, x0, l1
 or x1, x1, x2
 l1: addi x1, x0, -8
-sh x1, 0(x0)
-lhu x2, 0(x0)
-lh x3, 0(x0)
+sh x1, 100(x0)
+lhu x2, 100(x0)
+lh x3, 100(x0)
 bgeu x3, x2, l2
 add x1, x0, x0
 l2: bne x3, x2, l3
