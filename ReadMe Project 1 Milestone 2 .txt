@@ -1,54 +1,37 @@
-RISC-V Single-Cycle CPU Project
---------------------------------
+===================================================================
+Project: RISC-V Pipelined Processor (RV32I Subset)
+Course: Computer Architecture (Project 1)
+===================================================================
 
-Student Names:
-- [Yara Ahmed ]
-- [Ahmed Bamadhaf]
+### Student Information
 
---------------------------------
+| **Yara Abdelkader** | yara2005@aucegypt.edu |
+| **Ahmed Bamhdaf** | [Please Insert Ahmed's Email Here] |
 
-Overview:
-We designed and implemented a single-cycle RISC-V processor using Verilog modules created in the lab. The processor executes instructions in one clock cycle and supports arithmetic, logic, load/store, and branch operations.
+---
 
-Main Modules:
-- PC (Program Counter): Holds the address of the current instruction.
-- Instruction Memory: Stores up to 64 instructions for testing.
-- Control Unit: Generates control signals (Branch, MemRead, MemWrite, RegWrite, ALUSrc, MemToReg, ALUOp, auipc, lui, jalr, writePC).
-- Register File: Contains 32 registers (x0–x31) with two read ports and one write port.
-- Data Memory: Handles load and store instructions.
-- ALU: Performs arithmetic, logic, shift, and comparison operations and generates status flags (Z, C, V, S).
-- ALU Control: Determines which ALU operation to perform based on ALUOp, funct3, and funct7.
-- Immediate Generator: Extracts and sign-extends immediate values.
-- Branch Unit: Decides whether a branch should be taken.
+## Release Notes (November 24, 2025)
 
---------------------------------
-Assumptions:
-- All instructions are word-aligned (4 bytes each).
-- Instruction Memory is preloaded manually with test instructions.
-- The CPU runs in a single-cycle model (no pipelining).
-- Only basic RISC-V RV32I instructions are implemented.
+This release represents the final, complete implementation of the 5-stage pipelined RISC-V (RV32I) processor with full hazard resolution.
 
---------------------------------
-What Works:
-- Most arithmetic, logical, and shift operations (ADD, SUB, AND, OR, XOR, SLT, SLTU, SLL, SRL, SRA).
-- Immediate operations (ADDI, ANDI, ORI, etc.) except where noted.
-- Load and store instructions (LW, SW).
-- Branch instructions (BEQ, BNE, BLT, BGE, BLTU, BGEU).
-- Correct PC update and instruction sequencing.
+### What Works (Implemented Features)
 
---------------------------------
-What Does Not Work / Known Issues:
-- ADDI instruction does not handle negative immediate values correctly.
-- Minor calculation errors were found during early debugging (fixed).
-- No support for pipelining or hazards (single-cycle only).
-- fence
+1.  **5-Stage Pipeline:** Fully implemented stages (IF, ID, EX, MEM, WB) separated by dedicated pipeline registers.
+2.  **Instruction Set:** Supports the **42 user-level instructions** of the RV32I ISA.
+3.  **Data Hazard Resolution:**
+    * **Forwarding:** Standard data hazards (Register-Register dependencies) are resolved via the **Forwarding Unit** routing data from the EX/MEM and MEM/WB registers back to the ALU inputs in the EX stage.
+    * **Load-Use Hazard:** Resolved by **stalling** for one cycle.
+4.  **Structural Hazard Resolution:** The hazard created by the **Single Memory** unit (used for both instruction and data access) is resolved by **stalling** for one cycle whenever a Load or Store instruction is in the MEM stage.
+5.  **Control Hazard Resolution:**
+    * **Branches/Jumps (MEM Resolution):** Correctly flushes the two misfetched instructions in the IF and ID stages when a branch is taken or a jump occurs. The PC is then updated to the target address.
+    * **Halting Instructions (ID Resolution):** Detects instructions like ECALL/EBREAK early in the ID stage, flushing only the instruction in the IF stage before halting.
 
---------------------------------
-Debugging Summary:
-- Early errors in ALU_Control caused incorrect results for ADD, AND, SUB, and OR.
-- After correcting ALU selection logic, these instructions worked properly.
-- Added missing system instructions and verified control signal generation.
+### What Does Not Work / Known Issues
 
---------------------------------
-Conclusion:
-The CPU successfully executes most RISC-V instructions in a single cycle. Debugging and testing improved our understanding of control logic, instruction decoding, and datapath design.
+* **System Calls:** The `ECALL` and `EBREAK` instructions are currently implemented as **halting instructions** (stopping the clock) rather than executing full operating system services.
+* **Misprediction:** The current implementation uses a simple **"Always Not Taken"** branch policy, meaning a taken branch will always incur the latency of a flush. Advanced branch prediction logic is not implemented.
+
+### Key Assumptions
+
+* **Memory Model:** It is assumed that the **Single Memory** unit is fast enough that it does not introduce additional pipeline stalls beyond the single-cycle structural hazard handled in the Verilog.
+* **Reset State:** The `reset` signal correctly initializes the PC to `0x00000000` and clears all registers and pipeline latches.
