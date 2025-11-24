@@ -1,11 +1,13 @@
-10/Nov :Tested the instruction throughout different programs. 
-	Debugged the issues in some modules.
-	Worked on the report.
-9/Nov : Amend Control unit (it should handle all new instructions and added signals that are deduced from the opcode)
+Nov 23, Control Hazards: Branch Flush Implemented - Complete Pipelined Implementation. Finalized logic for flushing instructions upon taken branches or jumps (Control Hazard Resolution).
 
-4/Nov : Add other memory instructions ( 2 load and 2 store)
-	Implement a shifting unit
+Nov 22, Structural Hazards / Stalling: Correct Single Memory and Correct Stalling implemented. Finalized logic to handle the structural hazard posed by the Single Memory unit, and associated Load-Use stalls.
 
-3/Nov : Lui, auipc, jal, jalr, syst instructions 
-	Added 2 more multiplexers for writing to register file coming from ImmGen and PC+4
-	Added 2 more multiplexer to choose future address coming from ALU
+Nov 20, Data Hazards / Memory: Correct Forwarding implemented. Single Memory file added. Addressed initial issues with Single Memory and data forwarding paths.
+
+Nov 19, Data Hazards: Forwarding Implemented. Initial logic for detecting and resolving data hazards added. Minor fixes applied.
+
+Nov 18, Pipelining Transition: Pipeline Registers Implemented. Began structural transition from single-cycle to 5-stage pipeline by adding pipeline registers between stages.
+
+Nov 17, Pipelining Transition: Continued work on implementing pipeline registers.
+
+Nov 16, Single Cycle Baseline: Single Cycle fixes. Final refinements and debugging of the single-cycle base design before moving to pipelining.
