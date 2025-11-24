@@ -1,3 +1,5 @@
+23/Nov : Implemented Compressed Instruction Decoder
+
 10/Nov : Complete ALU control (handle both R and I type)
 	Debugged the issues in some modules.
 	Worked on the report.

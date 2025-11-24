@@ -101,7 +101,7 @@ input clk, reset
     RCA #(32) addBranch(ID_EX_PC, ID_EX_Imm, 1'b0, addOutB);
     multiplexer #(10) m17 ({ID_EX_Ctrl[12:10], ID_EX_Ctrl[7], ID_EX_Ctrl[5:0]}, 10'b0000000000, stall | selMux2, nextMEMcontrols); // flush in case of stall or branch
 
-    register #(34) stau(.clk(clk), .reset(reset), .load(1'b1), 
+    register #(34) stall_frwd(.clk(clk), .reset(reset), .load(1'b1), 
     .D({forwardA[0] & stall, forwardB[0] & stall, writedata}), .Q(prevWritedata));
 
 
