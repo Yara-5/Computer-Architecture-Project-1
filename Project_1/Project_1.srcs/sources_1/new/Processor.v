@@ -63,12 +63,11 @@ input clk, reset
     multiplexer #(32) m16(currentAdrs, EX_MEM_ALU_out, stall, SMem_address);
     multiplexer #(32) m20(MemDataOut, 32'b00000000000000000000000000110011, stall | selMux2 | syst, inst);     // nop in case of stall or branch
 
-//    InstMem im(currentAdrs[7:2], inst);
 
     assign stall = EX_MEM_Ctrl[8] | EX_MEM_Ctrl[6];
 
    
-//    wire [31:0] IF_ID_PC, IF_ID_Inst, IF_ID_addOut4;
+//    wire [31:0] IF_ID_PC, IF_ID_Inst, IF_ID_addOut4;          // This line was moved up to support older models of vivado
     register #(96) IF_ID (.clk(clk),.reset(reset),.load(~stall),.D({currentAdrs, inst, addOut4}),
     .Q({IF_ID_PC,IF_ID_Inst, IF_ID_addOut4}) );
     
@@ -108,7 +107,7 @@ input clk, reset
 
     
 //    wire [31:0] EX_MEM_BranchAddOut, EX_MEM_ALU_out, EX_MEM_RegR2, EX_MEM_Imm, EX_MEM_addOut4;
-//    wire [9:0] EX_MEM_Ctrl;
+//    wire [9:0] EX_MEM_Ctrl;          // These line was moved up to support older models of vivado
 //    wire [4:0] EX_MEM_Rd;
     wire [3:0] EX_MEM_Flags, EX_MEM_StoLoaCtrl;
     wire [2:0] EX_MEM_Func3;
@@ -120,7 +119,6 @@ input clk, reset
     assign selMux8 = EX_MEM_StoLoaCtrl[1] & MemDataOut[7];
     assign selMux9 = EX_MEM_StoLoaCtrl[0] & MemDataOut[15];
     
-    //DataMem dm(clk,  EX_MEM_Ctrl[8], EX_MEM_Ctrl[6], EX_MEM_StoLoaCtrl[3:2], EX_MEM_ALU_out[7:0] , EX_MEM_RegR2, MemDataOut);
     multiplexer #(32) m8(MemDataOut, {24'hFFFFFF,MemDataOut[7:0]}, selMux8, wm8);                       // choosing dataFromMem           
     multiplexer #(32) m9(wm8, {16'hFFFF,MemDataOut[15:0]}, selMux9, dataFromMem);                       // choosing dataFromMem               
     BranchUnit bu(.funct3(EX_MEM_Func3), .Z(EX_MEM_Flags[2]),.C(EX_MEM_Flags[3]),.V(EX_MEM_Flags[1]),.S(EX_MEM_Flags[0]),.branch_taken(branch_taken) );
@@ -135,7 +133,7 @@ input clk, reset
     
     wire [31:0] MEM_WB_Mem_out, MEM_WB_Result;
     wire [1:0] MEM_WB_Ctrl;
-//    wire [4:0] MEM_WB_Rd;
+//    wire [4:0] MEM_WB_Rd;          // This line was moved up to support older models of vivado
     register #(103) MEM_WB (.clk(clk),.reset(reset),.load(1'b1),
     .D({EX_MEM_Ctrl[7], EX_MEM_Ctrl[5], dataFromMem, writeResult, EX_MEM_Rd }),
     .Q({MEM_WB_Ctrl,MEM_WB_Mem_out, MEM_WB_Result, MEM_WB_Rd}) );
